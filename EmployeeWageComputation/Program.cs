@@ -10,9 +10,10 @@ namespace EmployeeWageComputation
     {
         static void Main(string[] args)
         {
-            EmployeeWage employeeWage = new EmployeeWage();
-            employeeWage.MonthlyEmpWage();
-            Console.ReadKey();
+            Console.WriteLine("welcome to employee wage Computation ");
+            EmployeeWage employeeWageComputation = new EmployeeWage(20, 2, 10, 20);
+            employeeWageComputation.CalculateWage();
+            Console.ReadLine();
         }
     }
 }

@@ -8,36 +8,66 @@ namespace EmployeeWageComputation
 {
     internal class EmployeeWage
     {
-        public const int IS_PART_TIME = 1;
-        public const int IS_FULL_TIME = 2;
-        public const int EMP_RATE_PER_HOUR = 20;
-        public const int NUM_OF_WORKING_DAYS = 20;
-        public const int MAX_HRS_IN_MONTH = 100;
-        int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0, totalEmpWage;
-        public void MonthlyEmpWage()
+        public int emp_hr_per_rate = 20;//constant
+        public int num_of_working_days = 2;//constant
+        public int max_working_hour = 100;//constant
+        public int EmpWagePerHour = 20;
+        public const int is_part_time = 1;//constant
+        public const int is_full_time = 2;//constant
+        public int EmpDailywage = 0;
+        public float TotalWage = 0;
+
+        public EmployeeWage(int emp_hr_per_rate, int num_of_working_days, int max_working_hour, int EmpDailyWage)
         {
-            while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS)
+            this.emp_hr_per_rate = emp_hr_per_rate;
+            this.num_of_working_days = num_of_working_days;
+            this.max_working_hour = max_working_hour;
+            this.EmpWagePerHour = EmpDailyWage;
+        }
+
+        public EmployeeWage()
+        {
+        }
+
+        private int IsEmpPresent()
+        {
+            Random random = new Random();
+            int empcheck = random.Next(0, 3);
+            return empcheck;
+        }
+
+        public void CalculateWage()
+        {
+            int emphr = 0;
+            int empwage = 0;
+            int DayNumber = 1;
+            int totalemphr = 0;
+            int totalworkingdays = 0;
+            int totalempeage = 0;
+
+            while (DayNumber <= max_working_hour && totalworkingdays <= num_of_working_days)
             {
-                totalWorkingDays++;
-                Random random = new Random();
-                int empCheck = random.Next(0, 3);
-                switch (empCheck)
+                switch (IsEmpPresent())
+
                 {
-                    case IS_PART_TIME:
-                        empHrs = 4;
+                    case is_part_time:
+                        emphr = 4;
                         break;
-                    case IS_FULL_TIME:
-                        empHrs = 8;
+                    case is_full_time:
+                        emphr = 8;
                         break;
                     default:
-                        empHrs = 0;
+                        emphr = 0;
                         break;
                 }
-                totalEmpHrs += empHrs;
-                Console.WriteLine("Day#:" + totalWorkingDays + " Employee Hours : " + empHrs);
+                EmpDailywage = EmpWagePerHour + EmpWagePerHour;
+                TotalWage += EmpDailywage;
+                DayNumber++;
+                emphr += EmpWagePerHour;
+
             }
-            totalEmpWage = totalEmpHrs * EMP_RATE_PER_HOUR;
-            Console.WriteLine("Total Employee Wage : " + totalEmpWage);
+            Console.WriteLine("Total working days:" + (DayNumber - 1) + "\nTotal working hours :" + emphr + "\nTotal employee wage :" + EmpDailywage);
+
         }
 
     }
