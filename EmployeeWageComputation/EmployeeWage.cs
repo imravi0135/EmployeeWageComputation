@@ -8,16 +8,22 @@ namespace EmployeeWageComputation
 {
     internal class EmployeeWage
     {
-        const int IS_PRESENT = 1;
-        const int IS_ABSENT = 0;
-        public void GetAttendance()
+        public const int IS_FULL_TIME = 1, EMP_RATE_PER_HOUR = 20;
+        int empHrs = 0, empWage = 0;
+        public void DailyEmployeeWage()
         {
             Random random = new Random();
-            int checkAttendance = random.Next(0, 2);
-            if (checkAttendance == IS_PRESENT)
-                Console.WriteLine("Is Present");
-            else if (checkAttendance == IS_ABSENT)
-                Console.WriteLine("Is Absent");
+            int empCheck = random.Next(0, 2);
+            if (empCheck == IS_FULL_TIME)
+            {
+                empHrs = 8;
+            }
+            else
+            {
+                empHrs = 0; ;
+            }
+            empWage = empHrs * EMP_RATE_PER_HOUR;
+            Console.WriteLine("Employee Wage : " + empWage);
         }
     }
 }
