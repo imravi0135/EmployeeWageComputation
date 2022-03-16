@@ -11,7 +11,7 @@ namespace EmployeeWageComputation
         static void Main(string[] args)
         {
             EmployeeWage employeeWage = new EmployeeWage();
-            employeeWage.DailyEmployeeWage();
+            employeeWage.MonthlyEmpWage();
             Console.ReadKey();
         }
     }
