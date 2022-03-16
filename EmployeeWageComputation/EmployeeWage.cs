@@ -6,68 +6,74 @@ using System.Threading.Tasks;
 
 namespace EmployeeWageComputation
 {
-    internal class EmployeeWage
+    internal class Company
     {
-        public int emp_hr_per_rate = 20;//constant
-        public int num_of_working_days = 2;//constant
-        public int max_working_hour = 100;//constant
-        public int EmpWagePerHour = 20;
-        public const int is_part_time = 1;//constant
-        public const int is_full_time = 2;//constant
-        public int EmpDailywage = 0;
-        public float TotalWage = 0;
+        public int EmpWagePrHr;
+        public int FullTimeWrkHr;
+        public int PartTimeWrkHr;
+        public int MaxWrkHrs;
+        public int MaxWrkDays;
+        public String CompanyName;
 
-        public EmployeeWage(int emp_hr_per_rate, int num_of_working_days, int max_working_hour, int EmpDailyWage)
+        public Company(string companyName, int empWagePrHr, int fullTimeWrkHr, int partTimeWrkHr, int maxWrkHrs, int maxWrkDays)
         {
-            this.emp_hr_per_rate = emp_hr_per_rate;
-            this.num_of_working_days = num_of_working_days;
-            this.max_working_hour = max_working_hour;
-            this.EmpWagePerHour = EmpDailyWage;
+            CompanyName = companyName;
+            EmpWagePrHr = empWagePrHr;
+            FullTimeWrkHr = fullTimeWrkHr;
+            PartTimeWrkHr = partTimeWrkHr;
+            MaxWrkHrs = maxWrkHrs;
+            MaxWrkDays = maxWrkDays;
+        }
+    }
+    class EmployeeWageComputaion
+    {
+
+        private const int _isFullTime = 1;
+        private const int _isPartTime = 2;
+        private int totalWage;
+        private Dictionary<string, Company> companies = new Dictionary<string, Company>();
+
+        public void AddCompany(string CompanyName, int EmpWagePrHr, int FullTimeWrkHr, int PartTimeWrkHr, int MaxWrkHrs, int MaxWrkDays)
+        {
+            Company company = new Company(CompanyName.ToLower(), EmpWagePrHr, FullTimeWrkHr, PartTimeWrkHr, MaxWrkHrs, MaxWrkDays);
+            companies.Add(CompanyName.ToLower(), company);
         }
 
-        public EmployeeWage()
+        private int IsEmployeePresent()
         {
+            return new Random().Next(0, 3);
         }
 
-        private int IsEmpPresent()
+        public void CalculateWage(string CompanyName)
         {
-            Random random = new Random();
-            int empcheck = random.Next(0, 3);
-            return empcheck;
-        }
+            int workHr;
+            int totalWrkHr = 0;
+            int totalWrkDays = 0;
 
-        public void CalculateWage()
-        {
-            int emphr = 0;
-            int empwage = 0;
-            int DayNumber = 1;
-            int totalemphr = 0;
-            int totalworkingdays = 0;
-            int totalempeage = 0;
+            if (!companies.ContainsKey(CompanyName.ToLower()))
+                throw new ArgumentNullException("Company don't exist");
+            companies.TryGetValue(CompanyName.ToLower(), out Company company);
 
-            while (DayNumber <= max_working_hour && totalworkingdays <= num_of_working_days)
+            while (totalWrkHr <= company.MaxWrkHrs && totalWrkDays < company.MaxWrkDays)
             {
-                switch (IsEmpPresent())
-
+                switch (IsEmployeePresent())
                 {
-                    case is_part_time:
-                        emphr = 4;
+                    case _isFullTime:
+                        workHr = company.FullTimeWrkHr;
                         break;
-                    case is_full_time:
-                        emphr = 8;
+                    case _isPartTime:
+                        workHr = company.PartTimeWrkHr;
                         break;
                     default:
-                        emphr = 0;
+                        workHr = 0;
                         break;
                 }
-                EmpDailywage = EmpWagePerHour + EmpWagePerHour;
-                TotalWage += EmpDailywage;
-                DayNumber++;
-                emphr += EmpWagePerHour;
-
+                totalWrkHr += workHr;
+                totalWrkDays++;
             }
-            Console.WriteLine("Total working days:" + (DayNumber - 1) + "\nTotal working hours :" + emphr + "\nTotal employee wage :" + EmpDailywage);
-
+            totalWage = totalWrkHr * company.EmpWagePrHr;
+            Console.WriteLine("Company name: " + CompanyName);
+            Console.WriteLine("Employee total wage is {0} for {1} working days", totalWage, totalWrkDays);
         }
 
     }
