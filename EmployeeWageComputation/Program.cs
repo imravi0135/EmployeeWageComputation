@@ -10,13 +10,13 @@ namespace EmployeeWageComputation
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("welcome to employee wage Computation ");
-            Console.WriteLine();
-            EmployeeWageComputaion wage = new EmployeeWageComputaion();
-            wage.AddCompany("TATA", 20, 8, 4, 100, 20);
-            wage.AddCompany("Mahindra", 30, 8, 4, 100, 20);
-            wage.CalculateWage("Tata");
-            wage.CalculateWage("Mahindra");
+            Console.WriteLine("Hello welcome to EmpWage problem");
+
+            Console.WriteLine("Welcome to the Employee Wage Computation Problem");
+            EmpWageBuilderArray empWageBuilder = new EmpWageBuilderArray();
+            empWageBuilder.addCompanyEmpWage("DMart", 20, 20, 100);
+            empWageBuilder.addCompanyEmpWage("PVP", 30, 24, 160);
+            empWageBuilder.computeEmpWage();
             Console.ReadLine();
         }
     }
